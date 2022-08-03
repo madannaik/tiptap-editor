@@ -1,0 +1,42 @@
+import { mergeAttributes, Node } from "@tiptap/core";
+import { ReactNodeViewRenderer } from "@tiptap/react";
+
+import Component from "./Component";
+
+export default Node.create({
+  name: "reactComponent",
+
+  group: "block",
+
+  atom: true,
+
+  addAttributes() {
+    return {
+      count: {
+        default: 0,
+      },
+      selectedFile: {
+        default: {},
+      },
+      isFilePicked: {
+        default: false,
+      },
+    };
+  },
+
+  parseHTML() {
+    return [
+      {
+        tag: "react-component",
+      },
+    ];
+  },
+
+  renderHTML({ HTMLAttributes }) {
+    return ["react-component", mergeAttributes(HTMLAttributes)];
+  },
+
+  addNodeView() {
+    return ReactNodeViewRenderer(Component);
+  },
+});
