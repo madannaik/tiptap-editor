@@ -6,14 +6,17 @@ export default (props: any) => {
   React.useEffect(() => {}, []);
 
   const ref = useRef(null);
-
+  const [file,setFile] = useState<any>()
   const changeHandler = (event: any) => {
     props.updateAttributes({
       selectedFile: event.target.files[0],
       isFilePicked: true,
     });
+    setFile(URL.createObjectURL(event.target.files[0]))
   };
-  const handleSubmission = () => {};
+   function handleSubmission(blob:any) {
+    return  window.URL.createObjectURL(blob)
+  };
 
   return (
     <NodeViewWrapper className="react-component">
@@ -28,6 +31,7 @@ export default (props: any) => {
               lastModifiedDate:{" "}
               {props.node.attrs.selectedFile.lastModifiedDate.toLocaleDateString()}
             </p>
+            <img src={file}/>
             {props.node.attrs.isSelected && <Document file={use} />}
           </div>
         ) : (
